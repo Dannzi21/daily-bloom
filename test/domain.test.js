@@ -1,0 +1,5 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {habit,toggle,streak,lastDays,validHabits} from '../public/domain.js';
+test('week crosses month and leap-day boundaries',()=>{assert.deepEqual(lastDays('2024-03-02',3),['2024-02-29','2024-03-01','2024-03-02']);});
+test('streak includes yesterday until today is checked',()=>{assert.equal(streak(['2026-09-24','2026-09-25'],'2026-09-26'),2);assert.equal(streak(['2026-09-24','2026-09-25','2026-09-26'],'2026-09-26'),3);assert.equal(streak(['2026-09-24'],'2026-09-26'),0);});
+test('check-ins toggle without duplicates or mutations',()=>{const items=[habit('Read','1')];const checked=toggle(items,'1','2026-09-26','2026-09-26');assert.equal(items[0].days.length,0);assert.equal(checked[0].days.length,1);assert.equal(toggle(checked,'1','2026-09-26','2026-09-26')[0].days.length,0);assert.throws(()=>toggle(items,'1','2026-09-27','2026-09-26'));});
+test('validates stored dates and habit names',()=>{assert.throws(()=>habit('  '));assert.equal(validHabits([{...habit('Read'),days:['2026-02-30']}]),false);assert.equal(validHabits([habit('Read')]),true);});
