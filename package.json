@@ -1,0 +1,14 @@
+{
+  "name": "daily-bloom",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "An offline-first habit tracker you can install on your phone.",
+  "scripts": {
+    "start": "node server.mjs",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
