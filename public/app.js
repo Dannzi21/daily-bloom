@@ -8,6 +8,6 @@ $('#undo').onclick=()=>{if(deleted){habits.splice(deleted.index,0,deleted.habit)
 $('#demo').onclick=()=>{if(habits.length)return;habits=[habit('Read 10 pages'),habit('Take a walk'),habit('Write one good thing')];commit('Sample habits loaded. Start checking in.');};
 window.addEventListener('beforeinstallprompt',event=>{event.preventDefault();installPrompt=event;$('#install').hidden=false;});$('#install').onclick=async()=>{if(installPrompt){await installPrompt.prompt();installPrompt=null;$('#install').hidden=true;}};
 window.addEventListener('appinstalled',()=>{$('#install').hidden=true;notice('DailyBloom installed.');});
-if('serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>notice('Offline setup could not finish. Try reloading while online.'));
+if(location.protocol !== 'file:' && 'serviceWorker' in navigator)navigator.serviceWorker.register('./sw.js').catch(()=>notice('Offline setup could not finish. Try reloading while online.'));
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)render();});setInterval(()=>{if(dateKey()!==currentDay)render();},30000);
 render();if(!saved.available)notice('Saved data could not be loaded. New changes will replace it.');
