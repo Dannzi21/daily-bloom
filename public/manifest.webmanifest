@@ -1,0 +1,19 @@
+{
+  "id": "./",
+  "name": "DailyBloom — Habit Tracker",
+  "short_name": "DailyBloom",
+  "description": "Small habits, daily progress. Works offline.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#211327",
+  "theme_color": "#211327",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

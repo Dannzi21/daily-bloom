@@ -1,0 +1,7 @@
+export function dateKey(date=new Date()){return [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-');}
+export function shiftDay(key,offset){const [y,m,d]=key.split('-').map(Number);const date=new Date(y,m-1,d,12);date.setDate(date.getDate()+offset);return dateKey(date);}
+export function lastDays(today=dateKey(),count=7){return Array.from({length:count},(_,i)=>shiftDay(today,i-count+1));}
+export function habit(name,id=crypto.randomUUID()){name=name.trim();if(!name||name.length>60)throw Error('Enter a habit name of 1–60 characters.');return {id,name,days:[]};}
+export function toggle(items,id,date,today=dateKey()){if(date>today)throw Error('Future days cannot be completed.');return items.map(h=>h.id===id?{...h,days:h.days.includes(date)?h.days.filter(d=>d!==date):[...h.days,date].sort()}:h);}
+export function streak(days,today=dateKey()){const set=new Set(days);let cursor=set.has(today)?today:shiftDay(today,-1),count=0;while(set.has(cursor)){count++;cursor=shiftDay(cursor,-1);}return count;}
+export function validHabits(items){return Array.isArray(items)&&items.every(h=>typeof h?.id==='string'&&typeof h.name==='string'&&h.name.trim().length>0&&h.name.length<=60&&Array.isArray(h.days)&&new Set(h.days).size===h.days.length&&h.days.every(d=>typeof d==='string'&&/^\d{4}-\d{2}-\d{2}$/.test(d)&&d.slice(0,4)>='1000'&&shiftDay(d,0)===d))&&new Set(items.map(h=>h.id)).size===items.length;}
